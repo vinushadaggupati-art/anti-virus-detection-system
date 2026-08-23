@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as EvidenceRouteImport } from './routes/evidence'
 import { Route as HiddenFilesRouteImport } from './routes/hidden-files'
 import { Route as NewScanRouteImport } from './routes/new-scan'
+import { Route as TimestampsRouteImport } from './routes/timestamps'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +35,25 @@ const NewScanRoute = NewScanRouteImport.update({
   path: '/new-scan',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TimestampsRoute = TimestampsRouteImport.update({
+  id: '/timestamps',
+  path: '/timestamps',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/evidence': typeof EvidenceRoute
   '/hidden-files': typeof HiddenFilesRoute
   '/new-scan': typeof NewScanRoute
+  '/timestamps': typeof TimestampsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/evidence': typeof EvidenceRoute
   '/hidden-files': typeof HiddenFilesRoute
   '/new-scan': typeof NewScanRoute
+  '/timestamps': typeof TimestampsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,20 @@ export interface FileRoutesById {
   '/evidence': typeof EvidenceRoute
   '/hidden-files': typeof HiddenFilesRoute
   '/new-scan': typeof NewScanRoute
+  '/timestamps': typeof TimestampsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/evidence' | '/hidden-files' | '/new-scan'
+  fullPaths: '/' | '/evidence' | '/hidden-files' | '/new-scan' | '/timestamps'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/evidence' | '/hidden-files' | '/new-scan'
-  id: '__root__' | '/' | '/evidence' | '/hidden-files' | '/new-scan'
+  to: '/' | '/evidence' | '/hidden-files' | '/new-scan' | '/timestamps'
+  id:
+    | '__root__'
+    | '/'
+    | '/evidence'
+    | '/hidden-files'
+    | '/new-scan'
+    | '/timestamps'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +82,7 @@ export interface RootRouteChildren {
   EvidenceRoute: typeof EvidenceRoute
   HiddenFilesRoute: typeof HiddenFilesRoute
   NewScanRoute: typeof NewScanRoute
+  TimestampsRoute: typeof TimestampsRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +115,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof NewScanRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/timestamps': {
+      id: '/timestamps'
+      path: '/timestamps'
+      fullPath: '/timestamps'
+      preLoaderRoute: typeof TimestampsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +130,7 @@ const rootRouteChildren: RootRouteChildren = {
   EvidenceRoute: EvidenceRoute,
   HiddenFilesRoute: HiddenFilesRoute,
   NewScanRoute: NewScanRoute,
+  TimestampsRoute: TimestampsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
