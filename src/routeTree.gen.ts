@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EvidenceRouteImport } from './routes/evidence'
+import { Route as HiddenFilesRouteImport } from './routes/hidden-files'
 import { Route as NewScanRouteImport } from './routes/new-scan'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const EvidenceRoute = EvidenceRouteImport.update({
   path: '/evidence',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HiddenFilesRoute = HiddenFilesRouteImport.update({
+  id: '/hidden-files',
+  path: '/hidden-files',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NewScanRoute = NewScanRouteImport.update({
   id: '/new-scan',
   path: '/new-scan',
@@ -32,30 +38,34 @@ const NewScanRoute = NewScanRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/evidence': typeof EvidenceRoute
+  '/hidden-files': typeof HiddenFilesRoute
   '/new-scan': typeof NewScanRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/evidence': typeof EvidenceRoute
+  '/hidden-files': typeof HiddenFilesRoute
   '/new-scan': typeof NewScanRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/evidence': typeof EvidenceRoute
+  '/hidden-files': typeof HiddenFilesRoute
   '/new-scan': typeof NewScanRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/evidence' | '/new-scan'
+  fullPaths: '/' | '/evidence' | '/hidden-files' | '/new-scan'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/evidence' | '/new-scan'
-  id: '__root__' | '/' | '/evidence' | '/new-scan'
+  to: '/' | '/evidence' | '/hidden-files' | '/new-scan'
+  id: '__root__' | '/' | '/evidence' | '/hidden-files' | '/new-scan'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   EvidenceRoute: typeof EvidenceRoute
+  HiddenFilesRoute: typeof HiddenFilesRoute
   NewScanRoute: typeof NewScanRoute
 }
 
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EvidenceRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hidden-files': {
+      id: '/hidden-files'
+      path: '/hidden-files'
+      fullPath: '/hidden-files'
+      preLoaderRoute: typeof HiddenFilesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/new-scan': {
       id: '/new-scan'
       path: '/new-scan'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   EvidenceRoute: EvidenceRoute,
+  HiddenFilesRoute: HiddenFilesRoute,
   NewScanRoute: NewScanRoute,
 }
 export const routeTree = rootRouteImport
