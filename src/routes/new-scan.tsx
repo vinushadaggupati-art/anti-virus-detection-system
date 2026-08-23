@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { createFileRoute as _unused } from "@tanstack/react-router";
 import { AppShell, StageRail } from "@/components/afd/AppShell";
 import { PageHeader, Panel } from "@/components/afd/primitives";
 import { detectionModules, scanStages } from "@/lib/afd-data";
@@ -8,8 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { CheckCircle2, Loader2, Circle } from "lucide-react";
-
-void _unused;
 
 export const Route = createFileRoute("/new-scan")({
   head: () => ({
