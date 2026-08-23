@@ -10,11 +10,17 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EvidenceRouteImport } from './routes/evidence'
 import { Route as NewScanRouteImport } from './routes/new-scan'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EvidenceRoute = EvidenceRouteImport.update({
+  id: '/evidence',
+  path: '/evidence',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NewScanRoute = NewScanRouteImport.update({
@@ -25,27 +31,31 @@ const NewScanRoute = NewScanRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/evidence': typeof EvidenceRoute
   '/new-scan': typeof NewScanRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/evidence': typeof EvidenceRoute
   '/new-scan': typeof NewScanRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/evidence': typeof EvidenceRoute
   '/new-scan': typeof NewScanRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/new-scan'
+  fullPaths: '/' | '/evidence' | '/new-scan'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/new-scan'
-  id: '__root__' | '/' | '/new-scan'
+  to: '/' | '/evidence' | '/new-scan'
+  id: '__root__' | '/' | '/evidence' | '/new-scan'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EvidenceRoute: typeof EvidenceRoute
   NewScanRoute: typeof NewScanRoute
 }
 
@@ -56,6 +66,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/evidence': {
+      id: '/evidence'
+      path: '/evidence'
+      fullPath: '/evidence'
+      preLoaderRoute: typeof EvidenceRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/new-scan': {
@@ -70,6 +87,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EvidenceRoute: EvidenceRoute,
   NewScanRoute: NewScanRoute,
 }
 export const routeTree = rootRouteImport
